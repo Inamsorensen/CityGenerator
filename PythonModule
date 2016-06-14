@@ -1,0 +1,51 @@
+import toolutils
+
+def paintIt(scriptargs, paint_node, colour):
+    sopnode = scriptargs['node']
+    viewer = toolutils.sceneViewer()
+        
+    if paint_node==0:  #0 for terrain paint
+     paint = sopnode.node("paint_terrain")
+     paint.setCurrent(True, True)
+     paint.setParms({"fgr":0,"fgg":0,"fgb":0})
+     
+     
+    elif paint_node==1:  #1 for painting on city map
+     paint = sopnode.node("city_paint")
+     paint.setCurrent(True, True)
+     
+     if colour==1:  #Set paint colour to red to paint big city
+      paint.setParms({"fgr":0.9,"fgg":0,"fgb":0})
+           
+     elif colour==2:  #Set paint colour to green to paint forest
+      paint.setParms({"fgr":0,"fgg":0.9,"fgb":0}) 
+     
+     elif colour==3:  #Set paint colour to blue to paint water
+      paint.setParms({"fgr":0,"fgg":0,"fgb":0.9})
+      
+     elif colour==4:  #set paint colour to white to paint roads
+      paint.setParms({"fgr":1,"fgg":1,"fgb":1})
+      
+     elif colour==5:  #set paint colour to purple to paint small city
+      paint.setParms({"fgr":0.45,"fgg":0,"fgb":0.9})
+     
+     elif colour==0:  #Set paint colour to black to erase paint
+      paint.setParms({"fgr":0,"fgg":0,"fgb":0})
+         
+      
+    viewer.enterCurrentNodeState()
+    
+    
+def paintDone(scriptargs):
+    #fin_node=hou.node("FINAL_CITY")
+    #fin_node.setCurrent(True,True)
+    sopnode = scriptargs['node']
+    fin_node = sopnode.node("FINAL_CITY")
+    fin_node.setSelected(True, True, True)
+    
+    
+def paintDoneInside():
+    fin_node=hou.node("FINAL_CITY")
+    fin_node.setCurrent(True,True)
+    kwargs["node"].parent().setCurrent(True,True)
+    
